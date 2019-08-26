@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <bean id="userService" class="com.wb.service.UserService"></bean>
+    <bean id="myAspect" class="com.wb.MyAspect"></bean>
+
+    <!--命名空间-->
+    <p:config>
+        <!--切点表达式 "正则"用来匹配一些方法的-->
+        <p:pointcut id="pc" expression="execution(* com..*.*(..))"/>
+        <!--通知-->
+        <p:aspect ref="myAspect">
+            <p:before method="before" pointcut-ref="pc"></p:before>
+            <p:after method="after" pointcut-ref="pc"></p:after>
+            <p:around method="around" pointcut-ref="pc"></p:around>
+        </p:aspect>
+    </p:config>
+</beans>
